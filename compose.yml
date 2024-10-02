@@ -1,0 +1,31 @@
+services:
+  eureka:
+    image: flaviorv/eureka-server:v2
+    container_name: v-eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - net
+
+  veiculos:
+    image: veiculos:latest
+    depends_on:
+      - eureka
+    deploy:
+      replicas: 3
+    networks:
+      - net
+
+  v-gateway:
+    image: v-gateway:latest
+    depends_on:
+      - veiculos
+    ports:
+      - "9999:9999"
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
+volumes:

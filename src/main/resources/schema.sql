@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS veiculo (
+    vin INTEGER PRIMARY KEY,
+    tipo VARCHAR(30),
+    marca VARCHAR(30)
+);

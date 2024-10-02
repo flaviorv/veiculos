@@ -1,0 +1,46 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-headers: "*"
+            allowedOrigins: "*"
+            allow-credentials: false
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+              - PATCH
+              - HEAD
+        add-to-simple-url-handler-mapping: true
+      routes:
+        - id: veiculos
+          uri: lb://veiculos
+          predicates:
+            - Path=/**
+  application:
+    name: v-gateway
+server:
+  port: 9999
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
+  client:
+    service-url:
+      defaultZone: http://v-eureka:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
